@@ -40,7 +40,9 @@ export const login = async (req, res) => {
       user: tokenUser,
       refreshToken: existingToken.refreshToken,
     });
-    return res.status(StatusCodes.OK).json({ msg: "Login successfully" });
+    return res
+      .status(StatusCodes.OK)
+      .json({ msg: "Login successfully", currentUser: tokenUser });
   }
   const refreshToken = crypto.randomBytes(64).toString("hex");
   const ip = req.ip;
@@ -52,13 +54,16 @@ export const login = async (req, res) => {
     userAgent,
   });
   attachCookiesToResponse({ res, user: tokenUser, refreshToken });
-  return res.status(StatusCodes.OK).json({ msg: "Login successfully" });
+  return res
+    .status(StatusCodes.OK)
+    .json({ msg: "Login successfully", currentUser: tokenUser });
 };
 
 export const logout = async (req, res) => {
   res.clearCookie("accessToken");
   res.clearCookie("refreshToken");
   await Token.findOneAndDelete({ user: req.user.userId });
+  res.status(StatusCodes.OK).json({ msg: "Logout" });
 };
 
 export const getCurrentUser = async (req, res) => {

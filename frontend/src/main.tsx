@@ -10,11 +10,20 @@ import {
 } from "react-router-dom";
 import { store } from "./redux/store.ts";
 import { Provider } from "react-redux";
+import Login from "./pages/auth/Login.tsx";
+import Register from "./pages/auth/Register.tsx";
+import PrivateRoute from "./components/PrivateRoute.tsx";
+import Home from "./layout/Home.tsx";
 
 const route = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App />}>
-      <Route path="/" />
+    <Route element={<App />}>
+      <Route path="login" element={<Login />} />
+      <Route path="register" element={<Register />} />
+
+      <Route path="/" element={<PrivateRoute />}>
+        <Route index element={<Home />} />
+      </Route>
     </Route>
   )
 );

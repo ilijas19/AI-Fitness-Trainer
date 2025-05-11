@@ -13,11 +13,9 @@ const ErrorHandler = (err, req, res, next) => {
   }
 
   if (err.code === 11000) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({
-        msg: `Duplicate Value Entered For ${Object.keys(err.keyValues)}`,
-      });
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      msg: `Duplicate Value Entered For ${Object.keys(err.keyValues)}`,
+    });
   }
 
   return res

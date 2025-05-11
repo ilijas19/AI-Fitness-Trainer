@@ -9,7 +9,7 @@ export const verifyJwt = (token) => {
 };
 
 export const attachCookiesToResponse = ({ res, user, refreshToken }) => {
-  const accessTokenJwt = createJwt({ payload: user, expiresIn: "1d" });
+  const accessTokenJwt = createJwt({ payload: { user }, expiresIn: "1d" });
   const refreshTokenJwt = createJwt({
     payload: { user, refreshToken },
     expiresIn: "3d",

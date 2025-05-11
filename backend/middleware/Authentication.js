@@ -25,7 +25,7 @@ export const authenticateUser = async (req, res, next) => {
   if (refreshToken) {
     const decoded = verifyJwt(refreshToken);
     const token = await Token.findOne({
-      user: decoded.user,
+      user: decoded.user.userId,
       refreshToken: decoded.refreshToken,
     });
     if (!token || !token.isValid) {

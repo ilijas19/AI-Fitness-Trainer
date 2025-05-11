@@ -9,9 +9,9 @@ import { authenticateUser } from "../middleware/Authentication.js";
 
 const router = express.Router();
 
-router.use(authenticateUser);
-
 router.post("/register", register);
 router.post("/login", login);
-router.delete("/logout", logout);
-router.get("/me", getCurrentUser);
+router.delete("/logout", authenticateUser, logout);
+router.get("/me", authenticateUser, getCurrentUser);
+
+export default router;
