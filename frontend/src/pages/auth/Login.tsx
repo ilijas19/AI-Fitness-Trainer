@@ -16,6 +16,11 @@ const Login = () => {
 
   const [loginApiHandler, { isLoading }] = useLoginMutation();
 
+  const setCredentials = () => {
+    setEmail("ilijagocic19@gmail.com");
+    setPassword("123456");
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -81,6 +86,13 @@ const Login = () => {
             Sign Up
           </Link>
         </p>
+        <button
+          type="button"
+          onClick={setCredentials}
+          className="bg-white text-black self-start font-semibold rounded px-2 py-0.5 cursor-pointer"
+        >
+          ilijas19
+        </button>
       </form>
     </section>
   );

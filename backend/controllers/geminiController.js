@@ -7,7 +7,14 @@ dotenv.config();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 export const generateWorkoutPlan = async (req, res) => {
-  const { goal, level, type, daysPerWeek, preferences = "none" } = req.body;
+  const {
+    goal,
+    level,
+    type,
+    daysPerWeek,
+    additionalInfo = "none",
+    preferences = "none",
+  } = req.body;
   if (!goal || !level || !type || !daysPerWeek) {
     throw new CustomError.BadRequestError("All fields must be provided");
   }
@@ -24,6 +31,7 @@ Generate a personalized workout plan in STRICT JSON FORMAT matching this structu
   "level": "${level}",
   "type": "${type}",
   "daysPerWeek": ${daysPerWeek},
+  "additionalInfo":${additionalInfo}
   "sessions": [
     {
       "day": "[monday-sunday]",
@@ -48,6 +56,7 @@ Guidelines:
 - ${type === "home" ? "Use bodyweight exercises" : "Use appropriate equipment"}
 - Rotate focus areas between sessions
 - Never use markdown formatting
+- ALWAYS USE NUMBER FOR REPS AND SETS
 
 Output ONLY the raw JSON without any additional text or explanations.`;
 

@@ -33,6 +33,7 @@ export const createTrainingPlan = async (req, res) => {
     type,
     daysPerWeek,
     sessions,
+    user: req.user.userId,
   });
   res.status(StatusCodes.CREATED).json({ msg: "Training Plan Created" });
 };

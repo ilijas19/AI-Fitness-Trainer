@@ -14,6 +14,7 @@ import Login from "./pages/auth/Login.tsx";
 import Register from "./pages/auth/Register.tsx";
 import PrivateRoute from "./components/PrivateRoute.tsx";
 import Home from "./layout/Home.tsx";
+import TrainingPlan from "./pages/Training/TrainingPlan.tsx";
 
 const route = createBrowserRouter(
   createRoutesFromElements(
@@ -22,7 +23,8 @@ const route = createBrowserRouter(
       <Route path="register" element={<Register />} />
 
       <Route path="/" element={<PrivateRoute />}>
-        <Route index element={<Home />} />
+        <Route index element={<Home />} />{" "}
+        <Route path="/trainingPlan" element={<TrainingPlan />} />
       </Route>
     </Route>
   )

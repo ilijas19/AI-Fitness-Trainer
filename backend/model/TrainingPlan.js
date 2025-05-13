@@ -17,7 +17,6 @@ const trainingPlanSchema = new mongoose.Schema(
     },
     goal: {
       type: String,
-      enum: ["weight loss", "muscle gain", "endurance", "strength"],
       required: true,
     },
     level: {
@@ -27,7 +26,6 @@ const trainingPlanSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["gym", "outdoor", "home", "mixed"],
       required: true,
     },
 
@@ -67,17 +65,6 @@ const trainingPlanSchema = new mongoose.Schema(
             muscleGroup: {
               type: String,
               required: true,
-              enum: [
-                "chest",
-                "back",
-                "shoulders",
-                "arms",
-                "legs",
-                "core",
-                "full body",
-                "cardio",
-                "flexibility",
-              ],
             },
             sets: {
               type: Number,
@@ -98,14 +85,6 @@ const trainingPlanSchema = new mongoose.Schema(
         ],
         focusArea: {
           type: String,
-          enum: [
-            "upper body",
-            "lower body",
-            "full body",
-            "core",
-            "cardio",
-            "flexibility",
-          ],
         },
       },
     ],

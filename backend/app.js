@@ -9,6 +9,7 @@ import { connectDb } from "./db/connectDb.js";
 //routes
 import authRouter from "./routes/authRoutes.js";
 import aiRouter from "./routes/aiRoutes.js";
+import trainingPlanRouter from "./routes/trainingPlanRoutes.js";
 //middleware
 import notFound from "./middleware/NotFound.js";
 import ErrorHandler from "./middleware/ErrorHandler.js";
@@ -19,6 +20,7 @@ app.use(cookieParser(process.env.JWT_SECRET));
 app.use(fileUpload({ useTempFiles: true }));
 
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/trainingPlan", trainingPlanRouter);
 app.use("/api/v1/ai", aiRouter);
 
 app.use(notFound);
