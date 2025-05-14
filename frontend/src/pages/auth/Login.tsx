@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaLock, FaRegEnvelope } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
-import { useLoginMutation } from "../../redux/api/authApiSlice";
+import {
+  useGetCurrentUserQuery,
+  useLoginMutation,
+} from "../../redux/api/authApiSlice";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../redux/features/authSlice";
 import { IsApiError } from "../../utils/IsApiError";
 import { toast } from "react-toastify";
+import Loader from "../../components/Loader";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -13,6 +17,9 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { data: currentUser, isLoading: currentUserLoading } =
+    useGetCurrentUserQuery();
 
   const [loginApiHandler, { isLoading }] = useLoginMutation();
 
@@ -36,6 +43,16 @@ const Login = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/");
+    }
+  }, [currentUser]);
+
+  if (currentUserLoading) {
+    return <Loader />;
+  }
 
   return (
     <section className="sm:px-4 px-2">

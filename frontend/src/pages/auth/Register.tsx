@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaLock, FaRegEnvelope, FaUser } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import { IsApiError } from "../../utils/IsApiError";
 import { toast } from "react-toastify";
-import { useRegisterMutation } from "../../redux/api/authApiSlice";
+import {
+  useGetCurrentUserQuery,
+  useRegisterMutation,
+} from "../../redux/api/authApiSlice";
+import Loader from "../../components/Loader";
 
 const Register = () => {
   const [username, setUsername] = useState<string>("");
@@ -12,6 +16,9 @@ const Register = () => {
   const [repeatPassword, setRepeatPassword] = useState<string>("");
 
   const navigate = useNavigate();
+
+  const { data: currentUser, isLoading: currentUserLoading } =
+    useGetCurrentUserQuery();
 
   const [registerApiHandler, { isLoading: registerLoading }] =
     useRegisterMutation();
@@ -34,6 +41,16 @@ const Register = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/");
+    }
+  }, [currentUser]);
+
+  if (currentUserLoading) {
+    return <Loader />;
+  }
 
   return (
     <section className="sm:px-4 px-2">
