@@ -21,7 +21,7 @@ const Home = () => {
         <LinkBox
           icon={<FaBowlFood size={36} className="text-emerald-600" />}
           label="Meal Plan"
-          to="/trainingPlan"
+          to="/mealPlan"
         />{" "}
         <LinkBox
           icon={<FaMessage size={36} className="text-emerald-600" />}
