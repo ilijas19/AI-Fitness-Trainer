@@ -11,7 +11,7 @@ const Session = ({ session }: SessionProps) => {
   const [excerciseDropdownOpen, setExcerciseDropdownOpen] = useState(false);
 
   return (
-    <figure className="border-2 border-gray-600 py-5 px-4  rounded-lg  mt-3">
+    <figure className="border-2 border-gray-600 py-5 px-4  rounded-lg  mt-3 ">
       <div className="flex items-center gap-4 ">
         <h2
           className={`${
@@ -25,16 +25,17 @@ const Session = ({ session }: SessionProps) => {
             excerciseDropdownOpen ? "bg-emerald-700" : "bg-gray-700"
           } text-sm rounded-lg  px-2 py-0.5  text-gray-200`}
         >
-          {session.day.slice(0, 1).toUpperCase() + session.day.slice(1)}
+          {session.focusArea.slice(0, 1).toUpperCase() +
+            session.focusArea.slice(1)}
         </p>
         <IoIosArrowDown
           onClick={() => setExcerciseDropdownOpen(!excerciseDropdownOpen)}
           size={24}
-          className="ml-auto text-gray-600 cursor-pointer z-50"
+          className="ml-auto text-gray-600 cursor-pointer z-40"
         />
       </div>
       <ul
-        className={`flex flex-col gap-5 ${
+        className={`flex flex-col gap-4 ${
           excerciseDropdownOpen && "mt-3"
         } overflow-hidden transition-all duration-300 ease-in-out ${
           excerciseDropdownOpen ? "max-h-[2000px]" : "max-h-0"

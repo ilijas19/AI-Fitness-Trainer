@@ -13,7 +13,7 @@ interface TrainingFormState {
   additionalInfo: string;
 }
 
-const TrainingPlanForm = () => {
+const TrainingPlanForm = ({ refetch }: any) => {
   const [formState, setFormState] = useState<TrainingFormState>({
     goal: "",
     type: "",
@@ -49,6 +49,7 @@ const TrainingPlanForm = () => {
       }).unwrap();
       const res2 = await createTrainingApiHandler(res1.plan).unwrap();
       toast.success(res2.msg);
+      refetch();
     } catch (error) {
       if (IsApiError(error)) {
         toast.error(error.data.msg);
