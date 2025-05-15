@@ -69,3 +69,49 @@ export type TrainingPlanArgs = {
 export type TrainingPlanRes = {
   plan: TrainingPlan;
 };
+// MEAL PLAN
+export type Meal = {
+  name: string;
+  ingredients: string[];
+  calories: number;
+  macros: {
+    protein: number;
+    carbs: number;
+    fats: number;
+  };
+};
+
+export type MealPlan = {
+  totalCalories: number;
+  totalMacros: {
+    totalProtein: number;
+    totalCarbs: number;
+    totalFats: number;
+  };
+  breakfast: Meal;
+  lunch: Meal;
+  snack: Meal;
+  dinner: Meal;
+  user: string;
+};
+
+export type MealPlanArg = {
+  age: number;
+  weight: number;
+  height: number;
+  gender: string;
+  activityLevel: string;
+  goal: string;
+  dietaryPreferences?: string;
+  excludedIngredients?: string[];
+};
+
+export type MealPlanRes = {
+  mealPlan: MealPlan;
+};
+
+export type GetMyMealPlansRes = {
+  page: number;
+  hasNextPage: boolean;
+  mealPlans: MealPlan[];
+};

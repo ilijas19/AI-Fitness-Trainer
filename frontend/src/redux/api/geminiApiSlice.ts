@@ -1,6 +1,11 @@
 import { apiSlice } from "./apiSlice";
 import { GEMINI_URL } from "../constants";
-import type { TrainingPlanArgs, TrainingPlanRes } from "../../types";
+import type {
+  MealPlanArg,
+  MealPlanRes,
+  TrainingPlanArgs,
+  TrainingPlanRes,
+} from "../../types";
 
 const geminiApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,7 +16,15 @@ const geminiApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    generateMealPlan: builder.mutation<MealPlanRes, MealPlanArg>({
+      query: (data) => ({
+        url: `${GEMINI_URL}/generate-mealPlan`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useGenerateTrainingPlanMutation } = geminiApiSlice;
+export const { useGenerateTrainingPlanMutation, useGenerateMealPlanMutation } =
+  geminiApiSlice;

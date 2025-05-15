@@ -3,17 +3,25 @@ import Loader from "../../components/Loader";
 import { useGetTrainingPlanQuery } from "../../redux/api/trainingPlanApiSlice";
 import TodaysWorkout from "../../components/training/TodaysWorkout";
 import Session from "../../components/training/Session";
+import { useState } from "react";
+import Modal from "../../components/Modal";
+import DeleteTrainingForm from "../../components/forms/DeleteTrainingForm";
 
 const TrainingPlan = () => {
-  const { data: trainingPlan, isLoading: trainingPlanLoading } =
-    useGetTrainingPlanQuery();
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+
+  const {
+    data: trainingPlan,
+    isLoading: trainingPlanLoading,
+    refetch: refetchTraining,
+  } = useGetTrainingPlanQuery();
 
   if (trainingPlanLoading) return <Loader />;
 
   return (
     <div className="min-h-screen ">
       {!trainingPlan ? (
-        <TrainingPlanForm />
+        <TrainingPlanForm refetch={refetchTraining} />
       ) : (
         <section className="max-w-[900px] mx-auto py-4">
           {/* header */}
@@ -35,7 +43,19 @@ const TrainingPlan = () => {
             {trainingPlan.sessions.map((session) => (
               <Session key={session._id} session={session} />
             ))}
+            <button
+              onClick={() => setDeleteModalOpen(true)}
+              className="bg-red-700 font-semibold self-end px-3 py-0.5 rounded-md mt-1 cursor-pointer hover:bg-red-800 transition-all duration-300"
+            >
+              Delete
+            </button>
           </ul>
+          <Modal
+            isModalOpen={isDeleteModalOpen}
+            onClose={() => setDeleteModalOpen(false)}
+          >
+            <DeleteTrainingForm onClose={() => setDeleteModalOpen(false)} />
+          </Modal>
         </section>
       )}
     </div>
