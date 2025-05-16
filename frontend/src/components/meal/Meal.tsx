@@ -16,8 +16,10 @@ const Meal = ({ meal, label }: MealProps) => {
             {meal.name}
           </h3>
           <p className="text-gray-300">Ingredients:</p>
-          {meal.ingredients.map((i) => (
-            <li className="text-gray-300 ml-5">{i}</li>
+          {meal.ingredients.map((i, index) => (
+            <li key={index} className="text-gray-300 ml-5">
+              {i}
+            </li>
           ))}
         </ul>
         {/* nutrition */}

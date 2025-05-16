@@ -1,6 +1,11 @@
 import { apiSlice } from "./apiSlice";
 import { MEAL_URL } from "../constants";
-import type { GetMyMealPlansRes, MealPlan, MessageRes } from "../../types";
+import type {
+  GetMyMealPlansRes,
+  MealPlan,
+  MessageRes,
+  UpdateMealPlanArg,
+} from "../../types";
 
 const mealPlanApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -17,17 +22,17 @@ const mealPlanApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     //type later
-    deleteMealPlan: builder.mutation({
-      query: ({ mealId }) => ({
+    deleteMealPlan: builder.mutation<MessageRes, string>({
+      query: (mealId) => ({
         url: `${MEAL_URL}/${mealId}`,
         method: "DELETE",
       }),
     }),
-    updateMealPlan: builder.mutation({
-      query: ({ mealId, data }) => ({
-        url: `${MEAL_URL}/${mealId}`,
+    updateMealPlan: builder.mutation<MessageRes, UpdateMealPlanArg>({
+      query: ({ newMealPlan, existingMealPlanId }) => ({
+        url: `${MEAL_URL}/${existingMealPlanId}`,
         method: "PATCH",
-        body: data,
+        body: { newMealPlan },
       }),
     }),
   }),

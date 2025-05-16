@@ -98,7 +98,7 @@ const MealPlanForm = ({ refetch }: FormProps) => {
           value={weight || ""}
           onChange={(e) => setWeight(Number(e.target.value))}
           placeholder="Enter Your Weight"
-          className="border-2 border-gray-700 rounded-lg px-3 py-1.5 outline-none mb-1"
+          className="bg-gray-800 border-2 border-gray-700 rounded-lg px-3 py-1.5 outline-none mb-1"
           required
         />
 
@@ -118,10 +118,12 @@ const MealPlanForm = ({ refetch }: FormProps) => {
         <select
           value={gender}
           onChange={(e) => setGender(e.target.value)}
-          className="border-2 border-gray-700 rounded-lg px-3 py-1.5 outline-none mb-1"
+          className="border-2 border-gray-700 rounded-lg px-3 py-1.5 outline-none mb-1 bg-gray-800 "
           required
         >
-          <option value="">Select your Gender</option>
+          <option disabled value="">
+            Select your Gender
+          </option>
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
@@ -131,7 +133,7 @@ const MealPlanForm = ({ refetch }: FormProps) => {
         <select
           value={activityLevel}
           onChange={(e) => setActivityLevel(e.target.value)}
-          className="border-2 border-gray-700 rounded-lg px-3 py-1.5 outline-none mb-1"
+          className=" bg-gray-800  border-2 border-gray-700 rounded-lg px-3 py-1.5 outline-none mb-1"
           required
         >
           <option value="">Select activity level</option>
@@ -147,7 +149,7 @@ const MealPlanForm = ({ refetch }: FormProps) => {
         <select
           value={goal}
           onChange={(e) => setGoal(e.target.value)}
-          className="border-2 border-gray-700 rounded-lg px-3 py-1.5 outline-none mb-1"
+          className="bg-gray-800   border-2 border-gray-700 rounded-lg px-3 py-1.5 outline-none mb-1"
           required
         >
           <option value="">Select your goal</option>

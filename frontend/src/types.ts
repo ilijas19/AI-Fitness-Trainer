@@ -69,6 +69,14 @@ export type TrainingPlanArgs = {
 export type TrainingPlanRes = {
   plan: TrainingPlan;
 };
+
+export type UpdatedMealPlanArg = {
+  mealPlan: MealPlan;
+  mealsToUpdate: string[];
+  dietaryPreferences?: string;
+  excludedIngredients?: string;
+};
+
 // MEAL PLAN
 export type Meal = {
   name: string;
@@ -82,6 +90,7 @@ export type Meal = {
 };
 
 export type MealPlan = {
+  _id: string;
   totalCalories: number;
   totalMacros: {
     totalProtein: number;
@@ -114,4 +123,9 @@ export type GetMyMealPlansRes = {
   page: number;
   hasNextPage: boolean;
   mealPlans: MealPlan[];
+};
+
+export type UpdateMealPlanArg = {
+  newMealPlan: MealPlan;
+  existingMealPlanId: string;
 };

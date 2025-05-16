@@ -231,3 +231,104 @@ Output ONLY the raw JSON without any additional text or explanations.`;
     );
   }
 };
+
+export const generateUpdatedMealPlan = async (req, res) => {
+  const {
+    mealPlan,
+    mealsToUpdate,
+    dietaryPreferences = "none",
+    excludedIngredients = "none",
+  } = req.body;
+
+  if (!mealPlan || !mealsToUpdate?.length) {
+    throw new CustomError.BadRequestError(
+      "Meal plan and meals to update must be provided"
+    );
+  }
+
+  try {
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+
+    // Get original nutritional targets
+    const originalCalories = mealPlan.totalCalories;
+    const originalMacros = mealPlan.totalMacros;
+
+    const prompt = `
+MODIFY THIS MEAL PLAN BY REPLACING SPECIFIC MEALS WHILE MAINTAINING NUTRITIONAL TARGETS.
+CURRENT MEAL PLAN:
+${JSON.stringify(mealPlan, null, 2)}
+
+UPDATE THESE MEALS: ${mealsToUpdate.join(", ")}
+
+GENERATE NEW MEAL PLAN IN STRICT JSON FORMAT WITH THIS EXACT STRUCTURE:
+{
+  "totalCalories": number,
+  "totalMacros": {
+    "totalProtein": number,
+    "totalCarbs": number,
+    "totalFats": number
+  },
+  "breakfast": {...},
+  "lunch": {...},
+  "snack": {...},
+  "dinner": {...}
+}
+
+STRICT RULES:
+1. Keep non-updated meals EXACTLY AS THEY ARE
+2. Replace only these meals: ${mealsToUpdate.join(", ")}
+3. Maintain total calories between ${originalCalories - 50} and ${
+      originalCalories + 50
+    }
+4. Macros must balance to original totals (±5g):
+   - Protein: ${originalMacros.totalProtein}g ±5
+   - Carbs: ${originalMacros.totalCarbs}g ±5
+   - Fats: ${originalMacros.totalFats}g ±5
+5. New meals must follow:
+   - Dietary preferences: ${dietaryPreferences}
+   - Exclude: ${excludedIngredients}
+   - 3-5 ingredients per meal
+   - No markdown formatting
+6. Preserve exact JSON structure
+7. Ingredients must include quantities (e.g. "200ml milk")
+
+OUTPUT ONLY RAW JSON WITH NO ADDITIONAL TEXT OR EXPLANATIONS.`;
+
+    const result = await model.generateContent(prompt);
+    const response = result.response;
+    let text = response.text();
+
+    // Clean and parse response
+    text = text.replace(/```json|```/g, "").trim();
+    const updatedPlan = JSON.parse(text);
+
+    // Validation
+    const validateMeal = (meal) =>
+      meal?.name &&
+      meal?.ingredients?.length >= 3 &&
+      meal?.calories &&
+      meal?.macros &&
+      Object.values(meal.macros).every(Number.isFinite);
+
+    const isValid = ["breakfast", "lunch", "snack", "dinner"].every(
+      (mealType) => validateMeal(updatedPlan[mealType])
+    );
+
+    if (!isValid) {
+      throw new Error("Invalid updated meal plan structure");
+    }
+
+    res.json({
+      mealPlan: {
+        ...updatedPlan,
+        user: req.user.userId,
+        dietaryPreferences,
+        excludedIngredients,
+      },
+    });
+  } catch (error) {
+    throw new CustomError.BadRequestError(
+      `Meal plan update failed: ${error.message}`
+    );
+  }
+};

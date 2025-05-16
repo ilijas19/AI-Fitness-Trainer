@@ -23,7 +23,27 @@ export const createMealPlan = async (req, res) => {
 };
 
 export const updateMealPlan = async (req, res) => {
-  return res.send("updateMealPlan");
+  const { id: existingMealPlanId } = req.params;
+  if (!existingMealPlanId) {
+    throw new CustomError.BadRequestError("Existing plan id must be provided");
+  }
+  const { newMealPlan } = req.body;
+  if (!newMealPlan) {
+    throw new CustomError.BadRequestError("New Meal Plan Must Be Provided");
+  }
+  const mealPlan = await MealPlan.findOne({ _id: existingMealPlanId });
+  if (!mealPlan) {
+    throw new CustomError.NotFoundError("Meal Plan Not Found");
+  }
+  mealPlan.breakfast = newMealPlan.breakfast;
+  mealPlan.lunch = newMealPlan.lunch;
+  mealPlan.snack = newMealPlan.snack;
+  mealPlan.dinner = newMealPlan.dinner;
+  mealPlan.totalCalories = newMealPlan.totalCalories;
+  mealPlan.totalMacros = newMealPlan.totalMacros;
+
+  await mealPlan.save();
+  res.status(StatusCodes.OK).json({ msg: "Meals Updated" });
 };
 
 export const getMyMealPlans = async (req, res) => {
