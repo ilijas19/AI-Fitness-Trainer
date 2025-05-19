@@ -16,6 +16,7 @@ import PrivateRoute from "./components/PrivateRoute.tsx";
 import Home from "./layout/Home.tsx";
 import TrainingPlan from "./pages/Training/TrainingPlan.tsx";
 import MealPlan from "./pages/Meal/MealPlan.tsx";
+import ProgressPage from "./pages/Progress/ProgressPage.tsx";
 
 const route = createBrowserRouter(
   createRoutesFromElements(
@@ -27,6 +28,7 @@ const route = createBrowserRouter(
         <Route index element={<Home />} />{" "}
         <Route path="/trainingPlan" element={<TrainingPlan />} />
         <Route path="/mealPlan" element={<MealPlan />} />
+        <Route path="/progress" element={<ProgressPage />} />
       </Route>
     </Route>
   )

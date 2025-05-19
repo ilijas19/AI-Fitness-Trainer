@@ -129,3 +129,23 @@ export type UpdateMealPlanArg = {
   newMealPlan: MealPlan;
   existingMealPlanId: string;
 };
+// WORKOUTS
+export type WorkoutExcercise = {
+  _id?: string;
+  name: string;
+  reps: number;
+  sets: number;
+  weight: number;
+};
+
+export type Workout = {
+  user: string;
+  exercises: WorkoutExcercise[];
+  date: Date;
+  _id: string;
+};
+
+export type CreateWorkoutArgs = {
+  exercises: WorkoutExcercise[];
+  date: string;
+};

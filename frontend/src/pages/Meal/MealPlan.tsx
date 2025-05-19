@@ -1,7 +1,6 @@
 import Loader from "../../components/Loader";
 import TotalsBox from "../../components/meal/TotalsBox";
 import { useGetMealPlansQuery } from "../../redux/api/mealPlanApiSlice";
-import type { MealPlan } from "../../types";
 import Meal from "../../components/meal/Meal";
 import MealPlanForm from "../../components/forms/MealPlanForm";
 import { useState } from "react";
@@ -9,6 +8,7 @@ import { BsThreeDots } from "react-icons/bs";
 import Modal from "../../components/Modal";
 import DeleteMealPlanForm from "../../components/forms/DeleteMealPlanForm";
 import UpdateMeal from "../../components/meal/UpdateMeal";
+
 const MealPlan = () => {
   const [isOptionsMenuOpen, setOptionsMenuOpen] = useState<boolean>(false);
   const [isDeletePlanMenuOpen, setDeletePlanMenuOpen] =

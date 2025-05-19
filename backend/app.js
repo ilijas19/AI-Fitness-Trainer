@@ -11,6 +11,7 @@ import authRouter from "./routes/authRoutes.js";
 import aiRouter from "./routes/aiRoutes.js";
 import trainingPlanRouter from "./routes/trainingPlanRoutes.js";
 import mealPlanRouter from "./routes/mealPlanRoutes.js";
+import workoutRouter from "./routes/workoutRoutes.js";
 //middleware
 import notFound from "./middleware/NotFound.js";
 import ErrorHandler from "./middleware/ErrorHandler.js";
@@ -23,6 +24,7 @@ app.use(fileUpload({ useTempFiles: true }));
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/trainingPlan", trainingPlanRouter);
 app.use("/api/v1/mealPlan", mealPlanRouter);
+app.use("/api/v1/workout", workoutRouter);
 app.use("/api/v1/ai", aiRouter);
 
 app.use(notFound);
