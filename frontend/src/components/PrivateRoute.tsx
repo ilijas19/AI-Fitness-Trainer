@@ -23,16 +23,21 @@ const PrivateRoute = () => {
     return <Loader />;
   }
 
-  if (!currentUser) {
-    return <Navigate to={"/login"} replace />;
-  }
+  // if (!currentUser) {
+  //   return <Navigate to={"/login"} replace />;
+  // }
 
-  if (currentUser) {
-    return (
-      <section>
-        <Outlet />
-      </section>
-    );
-  }
+  // if (currentUser) {
+  //   return (
+  //     <section>
+  //       <Outlet />
+  //     </section>
+  //   );
+  // }
+  return (
+    <section>
+      <Outlet />
+    </section>
+  );
 };
 export default PrivateRoute;
