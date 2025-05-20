@@ -114,16 +114,16 @@ const Register = () => {
         >
           Sign Up
         </button>
-        <p className="text-center text-gray-300 not-sm:text-sm mt-4">
-          Already a member?{" "}
-          <Link
-            to={"/login"}
-            className="text-emerald-600 font-semibold hover:text-emerald-500 transition-colors"
-          >
-            Sign In
-          </Link>
-        </p>
       </form>
+      <p className="text-center text-gray-300 not-sm:text-sm mt-4">
+        Already a member?{" "}
+        <Link
+          to={"/login"}
+          className="text-emerald-600 font-semibold hover:text-emerald-500 transition-colors"
+        >
+          Sign In
+        </Link>
+      </p>
     </section>
   );
 };

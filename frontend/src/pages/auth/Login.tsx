@@ -53,7 +53,7 @@ const Login = () => {
     <section className="sm:px-4 px-2">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-[600px] h-fit mx-auto  shadow-xl mt-12 bg-gray-700  rounded-lg p-4 pb-6 px-6 flex flex-col "
+        className="w-full max-w-[600px] h-fit mx-auto  shadow-xl mt-12 bg-gray-700  rounded-lg p-4  px-6 flex flex-col "
       >
         <h2 className="font-bold sm:text-2xl text-xl text-center mb-1">
           Welcome
