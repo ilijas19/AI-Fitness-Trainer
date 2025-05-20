@@ -39,7 +39,7 @@ app.use(helmet());
 app.use(
   cors({
     origin: [
-      "https://mern-gym-managment-system.onrender.com",
+      "https://ai-fitness-trainer-hk05.onrender.com/",
       "http://localhost:5173",
     ],
     methods: ["GET", "POST", "PATCH", "DELETE"],
