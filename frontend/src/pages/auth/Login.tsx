@@ -25,7 +25,6 @@ const Login = () => {
 
   const setCredentials = () => {
     setEmail("ilijagocic19@gmail.com");
-    setPassword("123456");
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

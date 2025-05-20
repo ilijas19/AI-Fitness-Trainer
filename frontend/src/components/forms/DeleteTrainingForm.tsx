@@ -23,7 +23,10 @@ const DeleteTrainingForm = ({ onClose }: FormProps) => {
     }
   };
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col items-center gap-2">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col items-center gap-2 mt-6"
+    >
       <h2 className="text-xl font-semibold mb-2 ">Delete Training Plan</h2>
       <p className="text-gray-300 text-center">
         Are you sure you want to{" "}

@@ -32,7 +32,7 @@ const DeleteWorkoutFrom = ({
   };
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col items-center gap-1">
+    <form onSubmit={onSubmit} className="flex flex-col items-center gap-1 mt-6">
       <h2 className="text-xl font-semibold mb-2 ">Delete Workout</h2>
       <p className="text-gray-300 text-center">
         Are you sure you want to{" "}
