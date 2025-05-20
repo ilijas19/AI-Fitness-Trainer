@@ -1,43 +1,36 @@
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetCurrentUserQuery } from "../redux/api/authApiSlice";
 import { setCurrentUser } from "../redux/features/authSlice";
-import { useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import Loader from "./Loader";
+import type { RootState } from "../redux/store";
 
 const PrivateRoute = () => {
-  const { data: currentUser, isLoading, refetch } = useGetCurrentUserQuery();
   const dispatch = useDispatch();
+  const { currentUser } = useSelector((state: RootState) => state.auth);
+
+  const { data: queryUser, isLoading } = useGetCurrentUserQuery();
 
   useEffect(() => {
-    if (currentUser) {
-      dispatch(setCurrentUser(currentUser.currentUser));
+    if (queryUser) {
+      dispatch(setCurrentUser(queryUser.currentUser));
     }
-  }, [currentUser]);
-
-  useEffect(() => {
-    refetch();
-  }, []);
+  }, [queryUser]);
 
   if (isLoading) {
     return <Loader />;
   }
 
-  // if (!currentUser) {
-  //   return <Navigate to={"/login"} replace />;
-  // }
+  if (!currentUser) {
+    return <Navigate to="/login" replace />;
+  }
 
-  // if (currentUser) {
-  //   return (
-  //     <section>
-  //       <Outlet />
-  //     </section>
-  //   );
-  // }
   return (
     <section>
       <Outlet />
     </section>
   );
 };
+
 export default PrivateRoute;
