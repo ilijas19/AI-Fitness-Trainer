@@ -7,9 +7,9 @@ import fileUpload from "express-fileupload";
 import path from "path";
 import cors from "cors";
 //security
-// import helmet from "helmet";
-// import mongoSanitize from "express-mongo-sanitize";
-// import rateLimit from "express-rate-limit";
+import helmet from "helmet";
+import mongoSanitize from "express-mongo-sanitize";
+import rateLimit from "express-rate-limit";
 //db
 import { connectDb } from "./db/connectDb.js";
 //routes
@@ -24,22 +24,22 @@ import ErrorHandler from "./middleware/ErrorHandler.js";
 
 const app = express();
 const __dirname = path.resolve();
-// const limiter = rateLimit({
-//   windowMs: 15 * 60 * 1000, // 15 minutes
-//   max: 100, // Limit each IP to 100 requests per windowMs
-// });
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+});
 
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use(fileUpload({ useTempFiles: true }));
-// app.use(limiter);
-// app.use(mongoSanitize());
-// app.use(helmet());
+app.use(limiter);
+app.use(mongoSanitize());
+app.use(helmet());
 
 app.use(
   cors({
     origin: [
-      "https://ai-fitness-trainer-hk05.onrender.com/",
+      "https://ai-fitness-trainer-hk05.onrender.com",
       "http://localhost:5173",
     ],
     methods: ["GET", "POST", "PATCH", "DELETE"],
