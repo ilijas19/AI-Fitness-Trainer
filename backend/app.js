@@ -48,6 +48,12 @@ app.use(
   })
 );
 
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/trainingPlan", trainingPlanRouter);
+app.use("/api/v1/mealPlan", mealPlanRouter);
+app.use("/api/v1/workout", workoutRouter);
+app.use("/api/v1/ai", aiRouter);
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
@@ -55,12 +61,6 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
   });
 }
-
-app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/trainingPlan", trainingPlanRouter);
-app.use("/api/v1/mealPlan", mealPlanRouter);
-app.use("/api/v1/workout", workoutRouter);
-app.use("/api/v1/ai", aiRouter);
 
 app.use(notFound);
 app.use(ErrorHandler);
