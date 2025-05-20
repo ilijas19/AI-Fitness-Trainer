@@ -33,7 +33,6 @@ app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use(fileUpload({ useTempFiles: true }));
 app.use(limiter);
-app.use(xss());
 app.use(mongoSanitize());
 app.use(helmet());
 
