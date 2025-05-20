@@ -4,6 +4,12 @@ import "dotenv/config";
 import express from "express";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
+import path from "path";
+import cors from "cors";
+//security
+import helmet from "helmet";
+import mongoSanitize from "express-mongo-sanitize";
+import rateLimit from "express-rate-limit";
 //db
 import { connectDb } from "./db/connectDb.js";
 //routes
@@ -17,9 +23,39 @@ import notFound from "./middleware/NotFound.js";
 import ErrorHandler from "./middleware/ErrorHandler.js";
 
 const app = express();
+const __dirname = path.resolve();
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+});
+
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use(fileUpload({ useTempFiles: true }));
+app.use(limiter);
+app.use(xss());
+app.use(mongoSanitize());
+app.use(helmet());
+
+app.use(
+  cors({
+    origin: [
+      "https://mern-gym-managment-system.onrender.com",
+      "http://localhost:5173",
+    ],
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+  });
+}
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/trainingPlan", trainingPlanRouter);
