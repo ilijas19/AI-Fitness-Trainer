@@ -24,7 +24,7 @@ const phoneNavItems = [
 const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu
 
-  const [logoutApiHandler, { isLoading }] = useLogoutMutation();
+  const [logoutApiHandler] = useLogoutMutation();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
