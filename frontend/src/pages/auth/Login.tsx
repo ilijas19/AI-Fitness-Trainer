@@ -92,8 +92,12 @@ const Login = () => {
         <p className="text-center text-gray-300 not-sm:text-sm mt-4">
           Don't have an account?{" "}
           <Link
-            to={"/register"}
-            className="text-emerald-600 font-semibold hover:text-emerald-500 transition-colors"
+            to="/register"
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+            }}
+            className="px-3 py-2 block"
           >
             Sign Up
           </Link>
